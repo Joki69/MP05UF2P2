@@ -35,12 +35,22 @@ public class HashTable {
             entries[hash] = hashEntry;
         }
         else {
-            HashEntry temp = entries[hash];
-            while(temp.next != null)
-                temp = temp.next;
+            //Añadire un if else para comprobar si se esta intentando hacer un update de una key
+            if (entries[hash].key == key) {
+                entries[hash].value = value;
+            } else {
+                HashEntry temp = entries[hash];
+                while (temp.next != null)
 
-            temp.next = hashEntry;
-            hashEntry.prev = temp;
+                    temp = temp.next;
+                //Como antes he añadido este if para comrpobar si se esta haciendo un update en los siguientes buckets
+                if (temp.key == key) {
+                    temp.value = value;
+                } else {
+                    temp.next = hashEntry;
+                    hashEntry.prev = temp;
+                }
+            }
         }
     }
 
