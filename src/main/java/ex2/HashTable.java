@@ -14,27 +14,27 @@ public class HashTable {
     private int ITEMS = 0;
     private HashEntry[] entries = new HashEntry[SIZE];
 
-    public int count(){
+    public int count() {
         return this.ITEMS;
     }
 
-    public int size(){
+    public int size() {
         return this.SIZE;
     }
 
     /**
      * Permet afegir un nou element a la taula.
-     * @param key La clau de l'element a afegir.
+     *
+     * @param key   La clau de l'element a afegir.
      * @param value El propi element que es vol afegir.
      */
     public void put(String key, String value) {
         int hash = getHash(key);
         final HashEntry hashEntry = new HashEntry(key, value);
 
-        if(entries[hash] == null) {
+        if (entries[hash] == null) {
             entries[hash] = hashEntry;
-        }
-        else {
+        } else {
             //Añadire un if else para comprobar si se esta intentando hacer un update de una key
             if (entries[hash].key == key) {
                 entries[hash].value = value;
@@ -56,42 +56,63 @@ public class HashTable {
 
     /**
      * Permet recuperar un element dins la taula.
+     *
      * @param key La clau de l'element a trobar.
      * @return El propi element que es busca (null si no s'ha trobat).
      */
     public String get(String key) {
         int hash = getHash(key);
-        if(entries[hash] != null) {
-            HashEntry temp = entries[hash];
+            if (entries[hash] == null) {
+                return null;
 
-            while( !temp.key.equals(key))
-                temp = temp.next;
+            } else {
 
-            return temp.value;
+                if (entries[hash].key == key) {
+                    return entries[hash].value;
+                }
+                else {
+
+                        HashEntry temp = entries[hash];
+
+                           while (temp.next!=null)   {
+                             if (!temp.key.equals(key)) {
+                                      temp = temp.next;
+                                      if(temp.key.equals(key)) {
+                                          return temp.value;
+                                      }
+                                  }
+                              }
+                              return null;
+                    }
+                }
         }
 
-        return null;
-    }
 
     /**
      * Permet esborrar un element dins de la taula.
+     *
      * @param key La clau de l'element a trobar.
      */
     public void drop(String key) {
         int hash = getHash(key);
-        if(entries[hash] != null) {
+        if (entries[hash] != null) {
 
             HashEntry temp = entries[hash];
-            while( !temp.key.equals(key))
+            while (!temp.key.equals(key))
                 temp = temp.next;
 
-            if(temp.prev == null) entries[hash] = null;             //esborrar element únic (no col·lissió)
-            else{
-                if(temp.next != null) temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
-                temp.prev.next = temp.next;                         //esborrem temp, per tant actualitzem el següent de l'anterior
-            }
+
+            if (temp.prev == null && temp.next!=null){ //Modificamos esta linea para que comrpuebe si el siguiente valor no es nulo y en caso de que no lo sea cambia el primero por el segundo
+                entries[hash] = temp.next;
+            } else if (temp.prev == null && temp.next==null) { //Modificamos esta tambien para que si no tiene nada ni delant ni detras simplemente borre
+                entries[hash] = null;
+            } else {
+            if (temp.next != null)
+                temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
+            temp.prev.next = temp.next;       //esborrem temp, per tant actualitzem el següent de l'anterior
         }
     }
+}
 
     private int getHash(String key) {
         // piggy backing on java string
