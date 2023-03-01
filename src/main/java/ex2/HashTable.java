@@ -101,15 +101,18 @@ public class HashTable {
             while (!temp.key.equals(key))
                 temp = temp.next;
 
-
-            if (temp.prev == null && temp.next!=null){ //Modificamos esta linea para que comrpuebe si el siguiente valor no es nulo y en caso de que no lo sea cambia el primero por el segundo
+            //Modificamos esta linea para que comrpuebe si el siguiente valor no es nulo y en caso de que no lo sea cambia el primero por el segundo
+            if (temp.prev == null && temp.next!=null){
                 entries[hash] = temp.next;
-            } else if (temp.prev == null && temp.next==null) { //Modificamos esta tambien para que si no tiene nada ni delant ni detras simplemente borre
+            }
+            //Modificamos esta tambien para que si no tiene nada ni delante ni detras simplemente borre
+            else if (temp.prev == null && temp.next==null) {
                 entries[hash] = null;
-            } else {
+            }
+            else {
             if (temp.next != null)
                 temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
-            temp.prev.next = temp.next;       //esborrem temp, per tant actualitzem el següent de l'anterior
+                temp.prev.next = temp.next;       //esborrem temp, per tant actualitzem el següent de l'anterior
         }
     }
 }
