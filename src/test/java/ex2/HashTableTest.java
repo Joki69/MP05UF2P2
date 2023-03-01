@@ -19,6 +19,7 @@ class HashTableTest {
         hashTable.put("0","0");
         Assertions.assertEquals("\n" +
                 " bucket[0] = [0, 0]", hashTable.toString());
+        //Assertions.assertEquals(hashTable.count());
     }
     @org.junit.jupiter.api.Test
     void putPrueba2() {
@@ -136,7 +137,6 @@ class HashTableTest {
 
     @org.junit.jupiter.api.Test
     void getPrueba6() {
-        //no funciona aun
         HashTable hashTable = new HashTable();
         hashTable.put("0","0");
         Assertions.assertEquals(hashTable.get("00"),null);

@@ -62,30 +62,30 @@ public class HashTable {
      */
     public String get(String key) {
         int hash = getHash(key);
-            if (entries[hash] == null) {
-                return null;
 
-            } else {
-
-                if (entries[hash].key == key) {
-                    return entries[hash].value;
-                }
-                else {
-
-                        HashEntry temp = entries[hash];
-
-                           while (temp.next!=null)   {
-                             if (!temp.key.equals(key)) {
-                                      temp = temp.next;
-                                      if(temp.key.equals(key)) {
-                                          return temp.value;
-                                      }
-                                  }
-                              }
-                              return null;
+        if (entries[hash] != null) {
+            //si el primer valor es el que buscamos lo devuelve
+            if (entries[hash].key == key) {
+                return entries[hash].value;
+            }
+            else {
+                HashEntry temp = entries[hash];
+               //Cambiamos el while para que compruebe si sigue teniendo valores en la tabla
+                while (temp.next != null) {
+                    //Con el anterior while pongo este if para ir cambiando el temp al siguiente valor
+                    if (!temp.key.equals(key)) {
+                        temp = temp.next;
+                        //Si encuentra la key indicada devuelve el value de este (en el caso contrario devolvera null
+                        if (temp.key.equals(key)) {
+                            return temp.value;
+                        }
                     }
                 }
+            }
         }
+        return null;
+    }
+
 
 
     /**
