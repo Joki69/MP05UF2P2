@@ -34,6 +34,8 @@ public class HashTable {
 
         if (entries[hash] == null) {
             entries[hash] = hashEntry;
+            //sumamos items añadidos a la tabla
+            ITEMS++;
         } else {
             //Añadire un if else para comprobar si se esta intentando hacer un update de una key
             if (entries[hash].key == key) {
@@ -43,11 +45,13 @@ public class HashTable {
                 while (temp.next != null)
 
                     temp = temp.next;
-                //Como antes he añadido este if para comrpobar si se esta haciendo un update en los siguientes buckets
+                //He añadido este if para comrpobar si se esta haciendo un update en los siguientes buckets
                 if (temp.key == key) {
                     temp.value = value;
                 } else {
                     temp.next = hashEntry;
+                    //sumamos items añadidos a la tabla
+                    ITEMS++;
                     hashEntry.prev = temp;
                 }
             }
@@ -96,26 +100,26 @@ public class HashTable {
     public void drop(String key) {
         int hash = getHash(key);
         if (entries[hash] != null) {
-
             HashEntry temp = entries[hash];
-            while (!temp.key.equals(key))
-                temp = temp.next;
 
-            //Modificamos esta linea para que comrpuebe si el siguiente valor no es nulo y en caso de que no lo sea cambia el primero por el segundo
-            if (temp.prev == null && temp.next!=null){
+            if (temp.key.equals(key)) {
+                //Si la primera posicion coincide con la que queremos borrar borraremos esta y pasaremos a la siguiente
                 entries[hash] = temp.next;
+               //restamos un item
+                ITEMS--;
             }
-            //Modificamos esta tambien para que si no tiene nada ni delante ni detras simplemente borre
-            else if (temp.prev == null && temp.next==null) {
-                entries[hash] = null;
+            //Cambiamos el wile para mirar si la siguiente key es la que buscamos
+            while (temp.next!=null && !temp.next.key.equals(key)) {
+                temp = temp.next;
             }
-            else {
-            if (temp.next != null)
-                temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
-                temp.prev.next = temp.next;       //esborrem temp, per tant actualitzem el següent de l'anterior
+            //Si la siguiente no es null lo borramos y sustituimos por el siguiente del siguiente
+            if (temp.next != null) {
+                //restamos un item
+                ITEMS--;
+                temp.next = temp.next.next;
+            }
         }
     }
-}
 
     private int getHash(String key) {
         // piggy backing on java string
