@@ -1,6 +1,6 @@
 package ex4;
 
-import ex2.HashTable;
+import ex4.HashTable;
 import org.junit.jupiter.api.Assertions;
 
 class HashTableTest {
@@ -16,9 +16,9 @@ class HashTableTest {
     @org.junit.jupiter.api.Test
     void putPrueba1() {
         HashTable hashTable = new HashTable();
-        hashTable.put("0","0");
+        hashTable.put("0",true);
         Assertions.assertEquals("\n" +
-                " bucket[0] = [0, 0]", hashTable.toString());
+                " bucket[0] = [0, true]", hashTable.toString());
         Assertions.assertEquals(hashTable.count(),1);
         Assertions.assertEquals(hashTable.size(),16);
     }
@@ -72,7 +72,7 @@ class HashTableTest {
     void putPrueba6() {
         HashTable hashTable = new HashTable();
         hashTable.put("0","0");
-        hashTable.put("00","00");
+        hashTable.put("00",2);
         hashTable.put("00","00v2");
         Assertions.assertEquals("\n" +
                 " bucket[0] = [0, 0] -> [00, 00v2]", hashTable.toString());
@@ -118,14 +118,14 @@ class HashTableTest {
     void getPrueba2() {
         HashTable hashTable = new HashTable();
         hashTable.put("0","0");
-        hashTable.put("00","00");
-        Assertions.assertEquals(hashTable.get("00"),"00");
+        hashTable.put("00",true);
+        Assertions.assertEquals(hashTable.get("00"),true);
     }
 
     @org.junit.jupiter.api.Test
     void getPrueba3() {
         HashTable hashTable = new HashTable();
-        hashTable.put("0","0");
+        hashTable.put("0",true);
         hashTable.put("00","00");
         hashTable.put("000","000");
         Assertions.assertEquals(hashTable.get("000"),"000");
@@ -172,12 +172,12 @@ class HashTableTest {
     void dropPrueba1() {
         HashTable hashTable = new HashTable();
         hashTable.put("0","0");
-        hashTable.put("00","00");
+        hashTable.put("00",2.2);
         hashTable.put("000","000");
         hashTable.put("0000","0000");
         hashTable.drop("0");
         Assertions.assertEquals("\n" +
-                " bucket[0] = [00, 00] -> [000, 000] -> [0000, 0000]", hashTable.toString());
+                " bucket[0] = [00, 2.2] -> [000, 000] -> [0000, 0000]", hashTable.toString());
         Assertions.assertEquals(hashTable.count(),3);
         Assertions.assertEquals(hashTable.size(),16);
     }
@@ -186,7 +186,7 @@ class HashTableTest {
     void dropPrueba2() {
         HashTable hashTable = new HashTable();
         hashTable.put("0","0");
-        hashTable.put("00","00");
+        hashTable.put("00",false);
         hashTable.put("000","000");
         hashTable.put("0000","0000");
         hashTable.drop("00");

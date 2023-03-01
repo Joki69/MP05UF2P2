@@ -1,6 +1,6 @@
 package ex3;
 
-import ex2.HashTable;
+import ex3.HashTable;
 import org.junit.jupiter.api.Assertions;
 
 class HashTableTest {

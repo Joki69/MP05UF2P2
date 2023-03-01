@@ -45,7 +45,7 @@ public class HashTable {
                 while (temp.next != null)
 
                     temp = temp.next;
-                //He añadido este if para comrpobar si se esta haciendo un update en los siguientes buckets
+                //He añadido este if para comprobar si se esta haciendo un update en los siguientes buckets
                 if (temp.key == key) {
                     temp.value = value;
                 } else {
@@ -79,7 +79,7 @@ public class HashTable {
                     //Con el anterior while pongo este if para ir cambiando el temp al siguiente valor
                     if (!temp.key.equals(key)) {
                         temp = temp.next;
-                        //Si encuentra la key indicada devuelve el value de este (en el caso contrario devolvera null
+                        //Si encuentra la key indicada devuelve el value de este (en el caso contrario devolvera null)
                         if (temp.key.equals(key)) {
                             return temp.value;
                         }
